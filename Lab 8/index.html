@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>✨ Random Joke Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 450px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            color: #fff;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 15px;
+            min-height: 60px;
+            transition: opacity 0.3s ease;
+        }
+
+        p {
+            font-weight: 300;
+            font-size: 18px;
+            margin-bottom: 25px;
+            min-height: 40px;
+            transition: opacity 0.3s ease;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            background: #ffffff;
+            color: #66a6ff;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background: #f1f1f1;
+            transform: scale(1.05);
+        }
+
+        .fade {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1 id="setup">Click below to brighten your day 😄</h1>
+    <p id="punchline"></p>
+    <button onclick="getJoke()">✨ New Joke</button>
+</div>
+
+<script>
+    function getJoke() {
+        const setup = document.getElementById("setup");
+        const punchline = document.getElementById("punchline");
+
+        setup.classList.add("fade");
+        punchline.classList.add("fade");
+
+        fetch('/joke')
+        .then(response => response.json())
+        .then(data => {
+            setTimeout(() => {
+                setup.innerText = data.setup;
+                punchline.innerText = data.punchline;
+                setup.classList.remove("fade");
+                punchline.classList.remove("fade");
+            }, 300);
+        });
+    }
+</script>
+
+</body>
+</html>
